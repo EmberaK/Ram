@@ -21,7 +21,7 @@ function createCommentsArray() {
 const updatedPublicsArray = publicsArray.map((_, index) => ({
     id: index + 1,
     url: `photos/${index + 1}.jpg`,
-    description: `опис фотографії ${index + 1}`,
+    description: `photo description ${index + 1}`,
     likes: getRandomNumber(likeRange.min, likeRange.max),
     comments: createCommentsArray(),
 }));

@@ -31,6 +31,7 @@ const updatedPublicsArray = publicsArray.map(function (_, index) {
 
 console.log(updatedPublicsArray);
 
+
 // Функція для рендерингу мініатюр
 function renderThumbnails(photoArray) {
   const thumbnailFragment = document.createDocumentFragment();

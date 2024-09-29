@@ -1,5 +1,6 @@
 import { publicsArray, feedbackMessages, userNames, likeRange, commentRange, avatarRange, userIdRange } from './constants.js';
 import { getRandomNumber, getRandomElement } from './utils.js';
+import { createThumbnail } from './thumbnail.js';
 
 // Генерує коментар
 function createComment() {
@@ -18,7 +19,7 @@ function createCommentsArray() {
 }
 
 // Оновлюємо масив фотографій, додаючи властивості до кожного об'єкта
-const updatedPublicsArray = publicsArray.map(function(_, index) {
+const updatedPublicsArray = publicsArray.map(function (_, index) {
   return {
     id: index + 1,
     url: `photos/${index + 1}.jpg`,
@@ -28,6 +29,20 @@ const updatedPublicsArray = publicsArray.map(function(_, index) {
   };
 });
 
-
-// Лог для перевірки отриманого масиву фотографій з коментарями
 console.log(updatedPublicsArray);
+
+
+// Функція для рендерингу мініатюр
+function renderThumbnails(photoArray) {
+  const thumbnailFragment = document.createDocumentFragment();
+
+  photoArray.forEach(function(photoObject) {
+    const thumbnailElement = createThumbnail(photoObject);
+    thumbnailFragment.appendChild(thumbnailElement);
+  });
+
+  const galleryContainer = document.querySelector('.pictures');
+  galleryContainer.appendChild(thumbnailFragment);
+}
+
+renderThumbnails(updatedPublicsArray);

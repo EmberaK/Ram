@@ -1,7 +1,7 @@
 import { publicsArray, feedbackMessages, randomWords, userNames, likeRange, commentRange, avatarRange, userIdRange } from './constants.js';
 import { getRandomNumber, getRandomElement } from './utils.js';
 import { createThumbnail } from './thumbnail.js';
-import { showBigPicture } from './full-screen-size.js'; // Импортируем функцию показа большого изображения
+import { showBigPicture } from './full-screen-size.js'; 
 
 // Генерує коментар
 function createComment() {

@@ -1,6 +1,7 @@
-import { publicsArray, feedbackMessages, userNames, likeRange, commentRange, avatarRange, userIdRange } from './constants.js';
+import { publicsArray, feedbackMessages, randomWords, userNames, likeRange, commentRange, avatarRange, userIdRange } from './constants.js';
 import { getRandomNumber, getRandomElement } from './utils.js';
 import { createThumbnail } from './thumbnail.js';
+import { showBigPicture } from './full-screen-size.js'; // Импортируем функцию показа большого изображения
 
 // Генерує коментар
 function createComment() {
@@ -18,31 +19,46 @@ function createCommentsArray() {
   return Array.from({ length: quantityComments }, createComment);
 }
 
-// Оновлюємо масив фотографій, додаючи властивості до кожного об'єкта
+// Генерує масив випадкових описів
+function getRandomDescription(wordsArray, count = 4) {
+  const shuffled = wordsArray.sort(() => 0.5 - Math.random());
+  const selectedWords = shuffled.slice(0, count);
+
+  return selectedWords.join(' ');
+}
+
+//збираємо мініатюру(1)
 const updatedPublicsArray = publicsArray.map(function (_, index) {
   return {
     id: index + 1,
     url: `photos/${index + 1}.jpg`,
-    description: `photo description ${index + 1}`,
+    description: getRandomDescription(randomWords),
     likes: getRandomNumber(likeRange.min, likeRange.max),
     comments: createCommentsArray(),
   };
 });
 
-console.log(updatedPublicsArray);
-
 
 // Функція для рендерингу мініатюр
 function renderThumbnails(photoArray) {
   const thumbnailFragment = document.createDocumentFragment();
-
-  photoArray.forEach(function(photoObject) {
+  photoArray.forEach(function (photoObject) {
     const thumbnailElement = createThumbnail(photoObject);
     thumbnailFragment.appendChild(thumbnailElement);
   });
-
   const galleryContainer = document.querySelector('.pictures');
   galleryContainer.appendChild(thumbnailFragment);
 }
 
+// Обробник для відкриття великого зображення
+document.querySelector('.pictures').addEventListener('click', (event) => {
+  const thumbnail = event.target.closest('.picture'); 
+  if (thumbnail) {
+    const index = Array.from(document.querySelectorAll('.picture')).indexOf(thumbnail); 
+    showBigPicture(updatedPublicsArray[index]); 
+    event.preventDefault(); 
+  }
+});
+
+// Рендерім мініатюри
 renderThumbnails(updatedPublicsArray);

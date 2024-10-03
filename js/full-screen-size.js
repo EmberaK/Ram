@@ -14,14 +14,14 @@ export function showBigPicture(photo) {
     const commentsList = bigPictureSection.querySelector('.social__comments');
     commentsList.innerHTML = '';
 
-    const commentsToShow = photo.comments.slice(0, 3);
+    const commentsToShow = photo.comments.slice(0, 5);
     commentsToShow.forEach(comment => {
         const commentElement = createCommentElement(comment);
         commentsList.appendChild(commentElement);
     });
 
     const loaderButton = bigPictureSection.querySelector('.comments-loader');
-    if (photo.comments.length > 3) {
+    if (photo.comments.length > 5) {
         loaderButton.classList.remove('hidden');
         loaderButton.onclick = () => loadAllComments(photo.comments, commentsList, loaderButton);
     } else {

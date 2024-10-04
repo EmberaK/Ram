@@ -1,8 +1,13 @@
 const imgUpload = document.querySelector('.img-upload');
-const imgUploadForm = imgUpload.querySelector('.img-upload__form');
 const imgUploadOverlay = imgUploadForm.querySelector('.img-upload__overlay');
-const hashtagsInput = imgUploadOverlay.querySelector('.text__hashtags');
-const commentsInput = imgUploadOverlay.querySelector('.text__description');
+export const imgUploadForm = imgUpload.querySelector('.img-upload__form');
+export const hashtagsInput = imgUploadOverlay.querySelector('.text__hashtags');
+export const commentsInput = imgUploadOverlay.querySelector('.text__description');
+export const fileInput = document.querySelector('#upload-file');
+export const imgUploadCancel = document.querySelector('.img-upload__cancel');
+const specialCharacters = /[!@$%^&*(),.?":{}|<>]/;
+
+
 
 export function showImgForm() {
     imgUploadOverlay.classList.remove('hidden');
@@ -33,41 +38,33 @@ function doValidationHashtags(e) {
                 hashtagsInput.setCustomValidity('Хеш-тег повинен починатися із символу #');
                 e.preventDefault();
                 return;
-            }
-            if (hashtag === '#') {
+            } else if (hashtag === '#') {
                 hashtagsInput.setCustomValidity('Хеш-тег не може складатися тільки із символу #');
                 e.preventDefault();
                 return;
-            }
-            if (hashtag.length > 20) {
+            } else if (hashtag.length > 20) {
                 hashtagsInput.setCustomValidity('Хеш-тег не може перевищувати 20 символів.');
                 e.preventDefault();
                 return;
-            }
-            if (!regexHashtags.test(hashtag)) {
+            } else if (!regexHashtags.test(hashtag)) {
                 hashtagsInput.setCustomValidity('Хештег має починатися з # і містити лише літери (українською або латиницею) або цифри без пробілів чи спецсимволів.');
                 e.preventDefault();
                 return;
-            }
-            if (uniqueHashtags.includes(normalizedHashtag)) {
+            } else if (uniqueHashtags.includes(normalizedHashtag)) {
                 hashtagsInput.setCustomValidity('Один і той же хеш-тег не може бути використаний двічі (незалежно від регістру)');
                 e.preventDefault();
                 return;
-            }
-            if (!hashtag.slice(1).length) {
+            } else if (!hashtag.slice(1).length) {
                 hashtagsInput.setCustomValidity('Хеш-тег не може бути порожнім.');
                 e.preventDefault();
                 return;
-            }
-
-            const specialCharacters = /[!@$%^&*(),.?":{}|<>]/;
-            if (specialCharacters.test(hashtag)) {
+            } else if (specialCharacters.test(hashtag)) {
                 hashtagsInput.setCustomValidity('Хеш-теги не можуть містити спеціальні символи.');
                 e.preventDefault();
                 return;
+            } else {
+                uniqueHashtags.push(normalizedHashtag);
             }
-
-            uniqueHashtags.push(normalizedHashtag);
         });
 
         if (uniqueHashtags.length > 5) {
@@ -95,3 +92,9 @@ export function doAllValidation(e) {
     doValidationHashtags(e);
     doValidationComments(e);
 }
+
+export const clearErrorMessages = (inputElement) => {
+    inputElement.addEventListener('input', () => {
+        inputElement.setCustomValidity('');
+    });
+};

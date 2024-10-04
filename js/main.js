@@ -2,7 +2,7 @@ import { publicsArray, feedbackMessages, randomWords, userNames, likeRange, comm
 import { getRandomNumber, getRandomElement } from './utils.js';
 import { createThumbnail } from './thumbnail.js';
 import { showBigPicture } from './full-screen-size.js'; 
-import { showImgForm, closeImgForm, doAllValidation } from './form-check.js';
+import { showImgForm, closeImgForm, doAllValidation, clearErrorMessages,imgUploadForm, hashtagsInput, commentsInput, fileInput, imgUploadCancel } from './form-check.js';
 
 // Генерує коментар
 function createComment() {
@@ -61,12 +61,6 @@ document.querySelector('.pictures').addEventListener('click', (event) => {
   }
 });
 
-// Відкриття форми завантаження зображення
-const fileInput = document.querySelector('#upload-file');
-const imgUploadCancel = document.querySelector('.img-upload__cancel');
-const hashtagsInput = document.querySelector('.text__hashtags');
-const commentsInput = document.querySelector('.text__description');
-const imgUploadForm = document.querySelector('.img-upload__form');
 
 // Обробник зміни файлу
 fileInput.addEventListener('change', () => {
@@ -85,13 +79,6 @@ document.addEventListener("keydown", (e) => {
     closeImgForm();
   }
 });
-
-// Очищення повідомлень про помилки при введенні
-const clearErrorMessages = (inputElement) => {
-  inputElement.addEventListener('input', () => {
-    inputElement.setCustomValidity('');
-  });
-};
 
 clearErrorMessages(hashtagsInput);
 clearErrorMessages(commentsInput);

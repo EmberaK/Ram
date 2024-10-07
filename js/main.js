@@ -2,6 +2,7 @@ import { publicsArray, feedbackMessages, randomWords, userNames, likeRange, comm
 import { getRandomNumber, getRandomElement } from './utils.js';
 import { createThumbnail } from './thumbnail.js';
 import { showBigPicture } from './full-screen-size.js'; 
+import { showImgForm, closeImgForm, doAllValidation, clearErrorMessages,imgUploadForm, hashtagsInput, commentsInput, fileInput, imgUploadCancel } from './form-check.js';
 
 // Генерує коментар
 function createComment() {
@@ -60,5 +61,32 @@ document.querySelector('.pictures').addEventListener('click', (event) => {
   }
 });
 
-// Рендерім мініатюри
+
+// Обробник зміни файлу
+fileInput.addEventListener('change', () => {
+  if (fileInput.files.length > 0) {
+    showImgForm();
+  }
+});
+
+// Обробник закриття форми завантаження зображення
+imgUploadCancel.addEventListener("click", closeImgForm);
+
+// Обробник натискання клавіші "Escape"
+document.addEventListener("keydown", (e) => {
+  const isNotActiveInput = document.activeElement !== hashtagsInput && document.activeElement !== commentsInput;
+  if (e.key === "Escape" && isNotActiveInput) {
+    closeImgForm();
+  }
+});
+
+clearErrorMessages(hashtagsInput);
+clearErrorMessages(commentsInput);
+
+// Валідація форми при відправці
+imgUploadForm.addEventListener('submit', (e) => {
+  doAllValidation(e);
+});
+
+// Рендеримо мініатюри
 renderThumbnails(updatedPublicsArray);

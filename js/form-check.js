@@ -1,8 +1,10 @@
 const imgUpload = document.querySelector('.img-upload');
-const imgUploadForm = imgUpload.querySelector('.img-upload__form');
+export const imgUploadForm = imgUpload.querySelector('.img-upload__form');
 const imgUploadOverlay = imgUploadForm.querySelector('.img-upload__overlay');
-const hashtagsInput = imgUploadOverlay.querySelector('.text__hashtags');
-const commentsInput = imgUploadOverlay.querySelector('.text__description');
+export const hashtagsInput = imgUploadOverlay.querySelector('.text__hashtags');
+export const commentsInput = imgUploadOverlay.querySelector('.text__description');
+export const fileInput = document.querySelector('#upload-file');
+export const imgUploadCancel = document.querySelector('.img-upload__cancel');
 
 export function showImgForm() {
     imgUploadOverlay.classList.remove('hidden');
@@ -95,3 +97,10 @@ export function doAllValidation(e) {
     doValidationHashtags(e);
     doValidationComments(e);
 }
+
+// Очищення повідомлень про помилки при введенні
+export const clearErrorMessages = (inputElement) => {
+  inputElement.addEventListener('input', () => {
+    inputElement.setCustomValidity('');
+  });
+};

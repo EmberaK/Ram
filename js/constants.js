@@ -59,3 +59,14 @@ export const feedbackMessages = [
     "Не забувайте правило третин; це може допомогти зробити знімок ще кращим.",
     "Фотографія виглядає стильно, але намагайтеся уникати надмірного редагування."
 ];
+
+export const valueStep = 25;
+
+export const scale = {
+    min: 25,
+    max: 100
+};
+
+export const defaultSize = 100;
+
+export const numForDrob = 100; 

@@ -5,6 +5,8 @@ import { showBigPicture } from './full-screen-size.js';
 import { showImgForm, closeImgForm, doAllValidation, clearErrorMessages,
   fileInput, imgUploadCancel, hashtagsInput, commentsInput, imgUploadForm
 } from './form-check.js';
+import { adjustImageSize } from "./image-scale.js"
+import { updateSliderOptions, handleEffectChange } from "./image-effect.js";
 
 // Генерує коментар
 function createComment() {
@@ -88,6 +90,17 @@ clearErrorMessages(commentsInput);
 imgUploadForm.addEventListener('submit', (e) => {
   doAllValidation(e);
 });
+const controlSmaller = document.querySelector(".scale__control--smaller");
+const controlBigger = document.querySelector(".scale__control--bigger");
+const effectsContainer = document.querySelector('.img-upload__effects'); 
+
+
+controlSmaller.addEventListener("click", adjustImageSize);
+controlBigger.addEventListener("click", adjustImageSize);
+
+effectsContainer.addEventListener('change', handleEffectChange);
+
+updateSliderOptions('none');
 
 // Рендеримо мініатюри
 renderThumbnails(updatedPublicsArray);

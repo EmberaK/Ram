@@ -1,3 +1,7 @@
+import { updateImageStyle } from "./image-scale.js";
+import { defaultSize } from "./constants.js";
+import { resetSlider } from "./image-effect.js"; 
+
 const imgUpload = document.querySelector('.img-upload');
 export const imgUploadForm = imgUpload.querySelector('.img-upload__form');
 const imgUploadOverlay = imgUploadForm.querySelector('.img-upload__overlay');
@@ -5,6 +9,7 @@ export const hashtagsInput = imgUploadOverlay.querySelector('.text__hashtags');
 export const commentsInput = imgUploadOverlay.querySelector('.text__description');
 export const fileInput = document.querySelector('#upload-file');
 export const imgUploadCancel = document.querySelector('.img-upload__cancel');
+const controlValue = document.querySelector(".scale__control--value");
 
 export function showImgForm() {
     imgUploadOverlay.classList.remove('hidden');
@@ -17,8 +22,11 @@ export function closeImgForm() {
     cleanForm();
 }
 
-function cleanForm() {
+export function cleanForm() {
     imgUploadForm.reset();
+    controlValue.value = `${defaultSize}%`;
+    updateImageStyle(defaultSize); 
+    resetSlider();
 }
 
 function doValidationHashtags(e) {
@@ -79,16 +87,13 @@ function doValidationHashtags(e) {
     }
 }
 
-
-function doValidationComments(e) {
+function doValidationComments(event) {
+    const commentsInput = document.querySelector('.text__description');
     const commentsValue = commentsInput.value.trim();
 
-    if (commentsValue.length === 0) {
-        commentsInput.setCustomValidity('Коментар не може бути порожнім.');
-        e.preventDefault();
-    } else if (commentsValue.length > 140) {
-        commentsInput.setCustomValidity('Максимальна кількість символів 140');
-        e.preventDefault();
+    if (commentsValue.length > 140) {
+        commentsInput.setCustomValidity('Комментарий не должен превышать 140 символов.');
+        event.preventDefault();
     }
 }
 

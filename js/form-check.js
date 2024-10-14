@@ -79,16 +79,13 @@ function doValidationHashtags(e) {
     }
 }
 
-
-function doValidationComments(e) {
+function doValidationComments(event) {
+    const commentsInput = document.querySelector('.text__description');
     const commentsValue = commentsInput.value.trim();
 
-    if (commentsValue.length === 0) {
-        commentsInput.setCustomValidity('Коментар не може бути порожнім.');
-        e.preventDefault();
-    } else if (commentsValue.length > 140) {
-        commentsInput.setCustomValidity('Максимальна кількість символів 140');
-        e.preventDefault();
+    if (commentsValue.length > 140) {
+        commentsInput.setCustomValidity('Комментарий не должен превышать 140 символов.');
+        event.preventDefault();
     }
 }
 
